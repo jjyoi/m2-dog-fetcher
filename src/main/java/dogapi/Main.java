@@ -5,6 +5,14 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        BreedFetcher live = new DogApiBreedFetcher();
+
+        try {
+            System.out.println("in the try: " + live.getSubBreeds("hound"));
+        } catch (BreedFetcher.BreedNotFoundException e) {
+            System.out.println("live fetch failed: " + e.getMessage());
+        }
+
         String breed = "hound";
         BreedFetcher breedFetcher = new CachingBreedFetcher(new BreedFetcherForLocalTesting());
         int result = getNumberOfSubBreeds(breed, breedFetcher);
