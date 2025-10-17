@@ -5,14 +5,6 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        BreedFetcher live = new DogApiBreedFetcher();
-
-        try {
-            System.out.println("in the try: " + live.getSubBreeds("hound"));
-        } catch (BreedFetcher.BreedNotFoundException e) {
-            System.out.println("live fetch failed: " + e.getMessage());
-        }
-
         String breed = "hound";
         BreedFetcher breedFetcher = new CachingBreedFetcher(new BreedFetcherForLocalTesting());
         int result = getNumberOfSubBreeds(breed, breedFetcher);
@@ -34,6 +26,13 @@ public class Main {
     public static int getNumberOfSubBreeds(String breed, BreedFetcher breedFetcher) {
         // TODO Task 3 implement this code so that it is entirely consistent with its provided documentation.
         // return statement included so that the starter code can compile and run.
-        return -1;
+        BreedFetcher live = new DogApiBreedFetcher();
+        try {
+            List<String> tmp = live.getSubBreeds(breed);
+            //System.out.println("sub-breeds: " + tmp);
+            return tmp.size();
+        } catch (BreedFetcher.BreedNotFoundException e) {
+            return 0;
+        }
     }
 }
